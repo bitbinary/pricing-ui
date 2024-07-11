@@ -1,7 +1,8 @@
+"use client";
 import { useProductPricing } from "@/contexts/ProductPricing";
 import { Checkbox } from "../ui/checkbox";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Label } from "@radix-ui/react-label";
 
 export const ProductsSearchResults = () => {
@@ -11,11 +12,11 @@ export const ProductsSearchResults = () => {
 
   const handleSelectAll = () => {
     setSelectAllProducts(!selectAllProducts);
-    const productSkus = productsSearchResults.map((product) => product.sku);
+    const productSKUs = productsSearchResults.map((product) => product.sku);
     if (!selectAllProducts) {
-      updateSelectedProducts(productSkus);
+      updateSelectedProducts(productSKUs);
     } else {
-      updateSelectedProducts(productSkus, true);
+      updateSelectedProducts(productSKUs, true);
     }
   };
 
@@ -26,9 +27,6 @@ export const ProductsSearchResults = () => {
       updateSelectedProducts([sku]);
     }
   };
-
-  useEffect(() => {}, [selectedProducts]);
-
   return (
     <div className="space-y-4">
       {productsSearchResults.length > 0 && (

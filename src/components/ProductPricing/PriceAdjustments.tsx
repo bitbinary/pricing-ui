@@ -62,7 +62,7 @@ export const PriceAdjustments = () => {
           id="adjustmentValue"
           type="number"
           placeholder="Price Adjustment Value"
-          defaultValue={0}
+          defaultValue={priceAdjustments.adjustmentValue}
           onChange={(e) => {
             const value = e.target.value;
             setPriceAdjustments({

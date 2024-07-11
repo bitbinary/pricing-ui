@@ -1,6 +1,15 @@
-import { PRODUCTS } from "@/app/data/sampleData";
+import { sql } from "@vercel/postgres";
 import { IProduct, IProductSearchFilters } from "@/types/Product";
 
+/**
+ * @swagger
+ * /api/products:
+ *   get:
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: hello world
+ */
 export async function GET() {
   const filters: IProductSearchFilters = {
     segments: [],
@@ -8,7 +17,11 @@ export async function GET() {
     brand: [],
   };
 
-  PRODUCTS.forEach((product: IProduct) => {
+  const { rows: Products } = (await sql`SELECT * FROM public."Products"`) as {
+    rows: IProduct[];
+  };
+
+  Products.forEach((product: IProduct) => {
     filters.segments.push(product.segmentId);
     filters.category.push(product.categoryId);
     filters.brand.push(product.brand);

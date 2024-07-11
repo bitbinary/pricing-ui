@@ -1,9 +1,10 @@
 import { useProductPricing } from "@/contexts/ProductPricing";
-import { ProductsSelectionTypes } from "./ProductsSelectionType";
+
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { SelectBox } from "../common/SelectBox";
 import { useMemo } from "react";
+import { ProductsSelectionTypes } from "@/types/Product";
 
 const generateOptions = (options: string[]) => {
   let generatedOptions = [

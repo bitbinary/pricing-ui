@@ -5,13 +5,10 @@ import {
   IProductSearchResult,
   ProductsSelectionTypes,
 } from "@/types/Product";
-import React, {
-  createContext,
-  use,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "sonner";
+
+const PRICING_PROFILE_ID = "pricing-profile-1";
 
 interface IProductPricingContext {
   productsSelectionType?: ProductsSelectionTypes;
@@ -27,10 +24,12 @@ interface IProductPricingContext {
     React.SetStateAction<Array<IProductSearchResult>>
   >;
   selectedProducts: string[];
-  updateSelectedProducts: (skus: string[], removeSkus?: boolean) => void;
+  updateSelectedProducts: (SKUs: string[], removeSKUs?: boolean) => void;
   priceAdjustments: IPriceAdjustments;
   setPriceAdjustments: React.Dispatch<React.SetStateAction<IPriceAdjustments>>;
   filters: IProductSearchFilters;
+  savePricingProfile?: () => void;
+  isLoading?: boolean;
 }
 
 const ProductPricingContext = createContext<IProductPricingContext | undefined>(
@@ -53,32 +52,61 @@ export const ProductPricingProvider: React.FC<{
     incrementMode: "increase",
     adjustmentValue: 0,
   });
-
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [filters, setFilters] = useState<IProductSearchFilters>({
     segments: [],
     category: [],
     brand: [],
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // This function will update the selected products based on the skus passed
-  // If removeSkus is true, it will remove the skus from the selected products
+  // This function will update the selected products based on the SKUs passed
+  // If removeSKUs is true, it will remove the SKUs from the selected products
   // We use this method to handle selection even when te list changes
-  const updateSelectedProducts = (skus: string[], removeSkus = false) => {
-    if (removeSkus) {
+  const updateSelectedProducts = (SKUs: string[], removeSKUs = false) => {
+    if (removeSKUs) {
       setSelectedProducts(
-        selectedProducts.filter((productSku) => !skus.includes(productSku))
+        selectedProducts.filter((productSku) => !SKUs.includes(productSku))
       );
     } else {
-      setSelectedProducts(Array.from(new Set([...selectedProducts, ...skus])));
+      setSelectedProducts(Array.from(new Set([...selectedProducts, ...SKUs])));
     }
   };
 
+  // fetch the pricing profile current state
   useEffect(() => {
+    const fetchPricingProfile = async () => {
+      const response = await fetch(
+        `/api/pricing-profiles/${PRICING_PROFILE_ID}`
+      )
+        .then((res) => res.json())
+        .catch((error) => {
+          console.error("Error fetching pricing profile", error);
+          return {};
+        });
+
+      if (response) {
+        setProductsSelectionType(response.selectionType);
+        setPriceAdjustments({
+          baseOn: response.adjustmentbasedon,
+          mode: response.adjustmentmode,
+          incrementMode: response.adjustmentincrementmode,
+          adjustmentValue: response.adjustmentvalue,
+        });
+        setSelectedProducts([...response?.products]);
+      }
+    };
+
+    fetchPricingProfile();
+  }, []);
+
+  useEffect(() => {
+    // remove the filter values that are empty
     Object.keys(productsSearchValues).forEach((key) => {
       if (!productsSearchValues[key as keyof typeof productsSearchValues])
         delete productsSearchValues[key as keyof typeof productsSearchValues];
     });
+
     const params = new URLSearchParams(
       productsSearchValues as Record<string, string>
     );
@@ -104,6 +132,35 @@ export const ProductPricingProvider: React.FC<{
     fetchFilters();
   }, []);
 
+  const savePricingProfile = async () => {
+    setIsLoading(true);
+    const response = await fetch(
+      `/api/pricing-profiles/${PRICING_PROFILE_ID}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: PRICING_PROFILE_ID,
+          selectionType: productsSelectionType,
+          adjustmentbasedon: priceAdjustments.baseOn,
+          adjustmentmode: priceAdjustments.mode,
+          adjustmentincrementmode: priceAdjustments.incrementMode,
+          adjustmentvalue: priceAdjustments.adjustmentValue,
+          products: selectedProducts,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        toast("Pricing profile saved.");
+      });
+
+    setIsLoading(false);
+  };
+
   return (
     <ProductPricingContext.Provider
       value={{
@@ -118,6 +175,8 @@ export const ProductPricingProvider: React.FC<{
         priceAdjustments,
         setPriceAdjustments,
         filters,
+        savePricingProfile,
+        isLoading,
       }}
     >
       {children}

@@ -3,7 +3,15 @@ import { sql } from "@vercel/postgres";
 import { SearchResultsDTO } from "./dto";
 import { searchProductBySKU, searchProductByTitle } from "./helpers";
 import { IProduct } from "@/types/Product";
-
+/**
+ * @swagger
+ * /api/products:
+ *   get:
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: hello world
+ */
 export async function GET(req: Request, res: Response) {
   const params = new URLSearchParams(req.url.split("?")[1]);
   const searchString = params.get("searchString");
