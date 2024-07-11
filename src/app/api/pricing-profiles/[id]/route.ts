@@ -86,7 +86,6 @@ export async function PUT(
     fields.length + 1
   }`;
   values.push(id);
-  console.log(query, values);
 
   try {
     const result = await pool.query(query, values);

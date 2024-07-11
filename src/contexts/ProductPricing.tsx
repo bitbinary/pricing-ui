@@ -156,7 +156,6 @@ export const ProductPricingProvider: React.FC<{
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         toast("Pricing profile saved.");
       });
 
