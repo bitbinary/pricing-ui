@@ -31,9 +31,9 @@ export async function PUT(
   const {
     name,
     products,
-    adjustmentMode,
-    adjustmentIncrementMode,
-    adjustmentBasedOn,
+    adjustmentmode,
+    adjustmentincrementmode,
+    adjustmentbasedon,
     selectionType,
     adjustmentValue,
   } = await req.json();
@@ -50,17 +50,17 @@ export async function PUT(
     fields.push("products");
     values.push(products);
   }
-  if (adjustmentMode !== undefined) {
-    fields.push("adjustmentMode");
-    values.push(adjustmentMode);
+  if (adjustmentmode !== undefined) {
+    fields.push("adjustmentmode");
+    values.push(adjustmentmode);
   }
-  if (adjustmentIncrementMode !== undefined) {
-    fields.push("adjustmentIncrementMode");
-    values.push(adjustmentIncrementMode);
+  if (adjustmentincrementmode !== undefined) {
+    fields.push("adjustmentincrementmode");
+    values.push(adjustmentincrementmode);
   }
-  if (adjustmentBasedOn !== undefined) {
-    fields.push("adjustmentBasedOn");
-    values.push(adjustmentBasedOn);
+  if (adjustmentbasedon !== undefined) {
+    fields.push("adjustmentbasedon");
+    values.push(adjustmentbasedon);
   }
   if (selectionType !== undefined) {
     fields.push("selectionType");
@@ -86,6 +86,7 @@ export async function PUT(
     fields.length + 1
   }`;
   values.push(id);
+  console.log(query, values);
 
   try {
     const result = await pool.query(query, values);

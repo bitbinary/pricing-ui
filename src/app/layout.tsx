@@ -32,7 +32,7 @@ export default function RootLayout({
         className={cn("antialiased", fontHeading.variable, fontBody.variable)}
       >
         {children}
-        <Toaster />
+        <Toaster position="bottom-left" />
       </body>
     </html>
   );

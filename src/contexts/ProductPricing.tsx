@@ -88,10 +88,12 @@ export const ProductPricingProvider: React.FC<{
       if (response) {
         setProductsSelectionType(response.selectionType);
         setPriceAdjustments({
-          baseOn: response.adjustmentbasedon,
-          mode: response.adjustmentmode,
-          incrementMode: response.adjustmentincrementmode,
-          adjustmentValue: response.adjustmentvalue,
+          ...{
+            baseOn: response.adjustmentbasedon,
+            mode: response.adjustmentmode,
+            incrementMode: response.adjustmentincrementmode,
+            adjustmentValue: response.adjustmentvalue,
+          },
         });
         setSelectedProducts([...response?.products]);
       }
