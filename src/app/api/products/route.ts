@@ -1,6 +1,8 @@
-import { PRODUCTS } from "../../data/sampleData";
+import { sql } from "@vercel/postgres";
+
 import { SearchResultsDTO } from "./dto";
 import { searchProductBySKU, searchProductByTitle } from "./helpers";
+import { IProduct } from "@/types/Product";
 
 export async function GET(req: Request, res: Response) {
   const params = new URLSearchParams(req.url.split("?")[1]);
@@ -9,8 +11,9 @@ export async function GET(req: Request, res: Response) {
   const segment = params.get("segment");
   const category = params.get("category");
   const brand = params.get("brand");
+  const { rows: Products } = await sql`SELECT * FROM public."Products"`;
 
-  let data = PRODUCTS;
+  let data = Products as IProduct[];
 
   if (searchString) {
     data = searchProductByTitle(data, searchString);

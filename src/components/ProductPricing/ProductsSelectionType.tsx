@@ -1,12 +1,8 @@
 import { useProductPricing } from "@/contexts/ProductPricing";
 import { Radios } from "../common/RadioGroup";
 import { Label } from "../ui/label";
+import { ProductsSelectionTypes } from "@/types/Product";
 
-export enum ProductsSelectionTypes {
-  SINGLE = "single",
-  MULTIPLE = "multiple",
-  ALL = "all",
-}
 const ProductsSelectionTypeOptions = [
   {
     value: ProductsSelectionTypes.SINGLE,

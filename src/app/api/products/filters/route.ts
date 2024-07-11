@@ -1,12 +1,8 @@
 import { PRODUCTS } from "@/app/data/sampleData";
-import { IProduct } from "@/types/Product";
+import { IProduct, IProductSearchFilters } from "@/types/Product";
 
 export async function GET() {
-  const filters: {
-    segments: string[];
-    category: string[];
-    brand: string[];
-  } = {
+  const filters: IProductSearchFilters = {
     segments: [],
     category: [],
     brand: [],

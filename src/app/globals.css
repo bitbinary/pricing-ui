@@ -36,6 +36,15 @@
     @apply bg-background text-foreground;
   }
 
+  main {
+    @apply bg-background;
+  }
+
+  main > * {
+    @apply mx-auto max-w-7xl px-4;
+    @apply bg-foreground;
+  }
+
   .font-heading {
     font-family: var(--font-heading);
   }

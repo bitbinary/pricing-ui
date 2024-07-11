@@ -3,6 +3,11 @@ import { SelectBox } from "../common/SelectBox";
 import { Radios } from "../common/RadioGroup";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import {
+  PriceBasedOnOptions,
+  PricingAdjustmentIncrementOptions,
+  PricingAdjustmentModeOptions,
+} from "@/types/Product";
 
 export const PriceAdjustments = () => {
   const { priceAdjustments, setPriceAdjustments } = useProductPricing();
@@ -31,7 +36,7 @@ export const PriceAdjustments = () => {
           Set Price Adjustment Mode
         </Label>
         <Radios
-          options={PricingAdjustmentModeOptions}
+          options={ADJUSTMENT_MODE_OPTIONS}
           id="mode"
           onValueChange={onValueChange}
           defaultValue={priceAdjustments.mode}
@@ -42,7 +47,7 @@ export const PriceAdjustments = () => {
           Set Price Adjustment Increment Mode
         </Label>
         <Radios
-          options={PricingAdjustmentIncrementOptions}
+          options={ADJUSTMENT_MODE_INCREMENT_OPTIONS}
           id="incrementMode"
           onValueChange={onValueChange}
           defaultValue={priceAdjustments.incrementMode}
@@ -78,31 +83,31 @@ export const PriceAdjustments = () => {
   );
 };
 
-const PricingAdjustmentModeOptions = [
+const ADJUSTMENT_MODE_OPTIONS = [
   {
-    value: "fixed",
+    value: PricingAdjustmentModeOptions.FIXED,
     label: "Fixed ($)",
   },
   {
-    value: "dynamic",
+    value: PricingAdjustmentModeOptions.PERCENTAGE,
     label: "Dynamic (%)",
   },
 ];
 
-const PricingAdjustmentIncrementOptions = [
+const ADJUSTMENT_MODE_INCREMENT_OPTIONS = [
   {
-    value: "increase",
+    value: PricingAdjustmentIncrementOptions.INCREASE,
     label: "Increase +",
   },
   {
-    value: "decrease",
+    value: PricingAdjustmentIncrementOptions.DECREASE,
     label: "Decrease -",
   },
 ];
 
 const basedOnOptions = [
   {
-    value: "global",
+    value: PriceBasedOnOptions.GLOBAL,
     label: "Global Wholesale Price",
   },
 ];

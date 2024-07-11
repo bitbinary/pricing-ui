@@ -1,4 +1,10 @@
-import { ProductsSelectionTypes } from "@/components/ProductPricing/ProductsSelectionType";
+import {
+  IPriceAdjustments,
+  IProductSearchBar,
+  IProductSearchFilters,
+  IProductSearchResult,
+  ProductsSelectionTypes,
+} from "@/types/Product";
 import React, {
   createContext,
   use,
@@ -12,59 +18,19 @@ interface IProductPricingContext {
   setProductsSelectionType: React.Dispatch<
     React.SetStateAction<ProductsSelectionTypes>
   >;
-  productsSearchValues?: {
-    searchString?: string;
-    productOrsku?: string;
-    segment?: string;
-    category?: string;
-    brand?: string;
-  };
+  productsSearchValues?: IProductSearchBar;
   setProductsSearchValues: React.Dispatch<
-    React.SetStateAction<{
-      searchString?: string;
-      productOrsku?: string;
-      segment?: string;
-      category?: string;
-      brand?: string;
-    }>
+    React.SetStateAction<IProductSearchBar>
   >;
-  productsSearchResults: Array<{
-    name: string;
-    sku: string;
-    description: string;
-    imgSrc: string;
-  }>;
+  productsSearchResults: Array<IProductSearchResult>;
   setProductsSearchResults: React.Dispatch<
-    React.SetStateAction<
-      Array<{
-        name: string;
-        sku: string;
-        description: string;
-        imgSrc: string;
-      }>
-    >
+    React.SetStateAction<Array<IProductSearchResult>>
   >;
   selectedProducts: string[];
   updateSelectedProducts: (skus: string[], removeSkus?: boolean) => void;
-  priceAdjustments: {
-    baseOn: string;
-    mode: string;
-    incrementMode: string;
-    adjustmentValue: number;
-  };
-  setPriceAdjustments: React.Dispatch<
-    React.SetStateAction<{
-      baseOn: string;
-      mode: string;
-      incrementMode: string;
-      adjustmentValue: number;
-    }>
-  >;
-  filters: {
-    segments: string[];
-    category: string[];
-    brand: string[];
-  };
+  priceAdjustments: IPriceAdjustments;
+  setPriceAdjustments: React.Dispatch<React.SetStateAction<IPriceAdjustments>>;
+  filters: IProductSearchFilters;
 }
 
 const ProductPricingContext = createContext<IProductPricingContext | undefined>(
@@ -76,27 +42,12 @@ export const ProductPricingProvider: React.FC<{
 }> = ({ children }) => {
   const [productsSelectionType, setProductsSelectionType] =
     useState<ProductsSelectionTypes>(ProductsSelectionTypes.MULTIPLE);
-  const [productsSearchValues, setProductsSearchValues] = useState<{
-    searchString?: string;
-    productOrsku?: string;
-    segment?: string;
-    category?: string;
-    brand?: string;
-  }>({});
+  const [productsSearchValues, setProductsSearchValues] =
+    useState<IProductSearchBar>({});
   const [productsSearchResults, setProductsSearchResults] = useState<
-    Array<{
-      name: string;
-      sku: string;
-      description: string;
-      imgSrc: string;
-    }>
+    Array<IProductSearchResult>
   >([]);
-  const [priceAdjustments, setPriceAdjustments] = useState<{
-    baseOn: string;
-    mode: string;
-    incrementMode: string;
-    adjustmentValue: number;
-  }>({
+  const [priceAdjustments, setPriceAdjustments] = useState<IPriceAdjustments>({
     baseOn: "global",
     mode: "fixed",
     incrementMode: "increase",
@@ -104,16 +55,15 @@ export const ProductPricingProvider: React.FC<{
   });
 
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-  const [filters, setFilters] = useState<{
-    segments: string[];
-    category: string[];
-    brand: string[];
-  }>({
+  const [filters, setFilters] = useState<IProductSearchFilters>({
     segments: [],
     category: [],
     brand: [],
   });
 
+  // This function will update the selected products based on the skus passed
+  // If removeSkus is true, it will remove the skus from the selected products
+  // We use this method to handle selection even when te list changes
   const updateSelectedProducts = (skus: string[], removeSkus = false) => {
     if (removeSkus) {
       setSelectedProducts(
@@ -129,15 +79,17 @@ export const ProductPricingProvider: React.FC<{
       if (!productsSearchValues[key as keyof typeof productsSearchValues])
         delete productsSearchValues[key as keyof typeof productsSearchValues];
     });
-    const params = new URLSearchParams(productsSearchValues);
+    const params = new URLSearchParams(
+      productsSearchValues as Record<string, string>
+    );
 
     const fetchProducts = async () => {
       const response = await fetch(`/api/products?${params.toString()}`).then(
         (res) => res.json()
       );
-
       setProductsSearchResults(response.data);
     };
+
     fetchProducts();
   }, [productsSearchValues]);
 
@@ -146,9 +98,9 @@ export const ProductPricingProvider: React.FC<{
       const response = await fetch("/api/products/filters").then((res) =>
         res.json()
       );
-
       setFilters(response.data);
     };
+
     fetchFilters();
   }, []);
 
