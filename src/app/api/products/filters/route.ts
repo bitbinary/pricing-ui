@@ -19,15 +19,11 @@ export async function GET() {
 
   const { rows: Products } = await sql`SELECT * FROM public."Products"`;
 
-  console.log(Products);
-
   Products.forEach((product) => {
     filters.segments.push(product.segmentid);
     filters.category.push(product.categoryid);
     filters.brand.push(product.brand);
   });
-
-  console.log(filters);
 
   filters.segments = Array.from(new Set(filters.segments));
   filters.category = Array.from(new Set(filters.category));
