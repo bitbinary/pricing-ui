@@ -47,6 +47,7 @@ export const ProductsSelectionType = () => {
           options={ProductsSelectionTypeOptions}
           defaultValue={productsSelectionType}
           onValueChange={onValueChange}
+          value={productsSelectionType}
         />
       </div>
     </div>

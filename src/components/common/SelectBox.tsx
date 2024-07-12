@@ -11,6 +11,7 @@ export interface SelectBoxProps {
   id: string;
   defaultValue?: string;
   placeHolder?: string;
+  value?: string | undefined;
   onValueChange?: (value: any) => void;
 }
 
@@ -19,6 +20,7 @@ export const SelectBox = ({
   id,
   defaultValue,
   placeHolder,
+  value,
   onValueChange,
 }: SelectBoxProps) => {
   const handleOnValueChange = (value: any) => {
@@ -29,7 +31,11 @@ export const SelectBox = ({
   };
 
   return (
-    <Select onValueChange={handleOnValueChange} defaultValue={defaultValue}>
+    <Select
+      value={value}
+      onValueChange={handleOnValueChange}
+      defaultValue={defaultValue}
+    >
       <SelectTrigger id={id}>
         <SelectValue placeholder={placeHolder} />
       </SelectTrigger>

@@ -34,11 +34,11 @@ export async function PUT(
     adjustmentmode,
     adjustmentincrementmode,
     adjustmentbasedon,
-    selectionType,
-    adjustmentValue,
+    selectiontype,
+    adjustmentvalue,
   } = await req.json();
 
-  // Build the fields and values for the query
+  // Build the fields and values for the query updating only as required
   const fields: string[] = [];
   const values: (string | string[] | number | null)[] = [];
 
@@ -62,13 +62,13 @@ export async function PUT(
     fields.push("adjustmentbasedon");
     values.push(adjustmentbasedon);
   }
-  if (selectionType !== undefined) {
+  if (selectiontype !== undefined) {
     fields.push("selectionType");
-    values.push(selectionType);
+    values.push(selectiontype);
   }
-  if (adjustmentValue !== undefined) {
-    fields.push("adjustmentValue");
-    values.push(adjustmentValue);
+  if (adjustmentvalue !== undefined) {
+    fields.push("adjustmentvalue");
+    values.push(adjustmentvalue);
   }
 
   if (fields.length === 0) {

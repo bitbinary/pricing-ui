@@ -3,6 +3,9 @@ import {
   IProductSearchBar,
   IProductSearchFilters,
   IProductSearchResult,
+  PriceBasedOnOptions,
+  PricingAdjustmentIncrementOptions,
+  PricingAdjustmentModeOptions,
   ProductsSelectionTypes,
 } from "@/types/Product";
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -47,9 +50,9 @@ export const ProductPricingProvider: React.FC<{
     Array<IProductSearchResult>
   >([]);
   const [priceAdjustments, setPriceAdjustments] = useState<IPriceAdjustments>({
-    baseOn: "global",
-    mode: "fixed",
-    incrementMode: "increase",
+    baseOn: PriceBasedOnOptions.GLOBAL,
+    mode: PricingAdjustmentModeOptions.FIXED,
+    incrementMode: PricingAdjustmentIncrementOptions.INCREASE,
     adjustmentValue: 0,
   });
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);

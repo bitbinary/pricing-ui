@@ -18,6 +18,7 @@ export const PriceAdjustments = () => {
       [id]: value,
     });
   };
+  console.log(priceAdjustments.incrementMode);
 
   return (
     <div className="space-y-4">
@@ -40,6 +41,7 @@ export const PriceAdjustments = () => {
           id="mode"
           onValueChange={onValueChange}
           defaultValue={priceAdjustments.mode}
+          value={priceAdjustments.mode}
         />
       </div>
       <div>
@@ -51,6 +53,7 @@ export const PriceAdjustments = () => {
           id="incrementMode"
           onValueChange={onValueChange}
           defaultValue={priceAdjustments.incrementMode}
+          value={priceAdjustments.incrementMode}
         />
       </div>
 
@@ -63,6 +66,7 @@ export const PriceAdjustments = () => {
           type="number"
           placeholder="Price Adjustment Value"
           defaultValue={priceAdjustments.adjustmentValue}
+          value={priceAdjustments.adjustmentValue}
           onChange={(e) => {
             const value = e.target.value;
             setPriceAdjustments({

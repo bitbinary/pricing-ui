@@ -6,10 +6,12 @@ export const Radios = ({
   options,
   defaultValue = "single",
   onValueChange,
+  value,
 }: {
   id: string;
   options: { value: string; label: string }[];
   defaultValue?: string;
+  value?: string;
   onValueChange?: (value: any) => void;
 }) => {
   const handleValueChange = (value: any) => {
@@ -23,6 +25,7 @@ export const Radios = ({
       id={id}
       defaultValue={defaultValue}
       onValueChange={handleValueChange}
+      value={value}
     >
       <div className="flex items-center space-x-4">
         {options.map((option) => (
