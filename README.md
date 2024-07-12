@@ -41,7 +41,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Comments
 
-- The Project used shadcn/ui for it's UI consistency.
+- The Project used shadcn/ui for it's UI consistency, maintainability and flexibility.
 - The Project used Tailwind CSS for styling
 - The Project used PostgreSQL for database
 
