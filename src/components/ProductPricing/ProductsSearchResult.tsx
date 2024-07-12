@@ -53,7 +53,7 @@ export const ProductsSearchResults = () => {
             alt={product.name}
             width={48}
             height={48}
-            className="w-10 h-10"
+            className="w-10 h-10 rounded-sm"
           />
           <div className="flex flex-col">
             <Label className="text-sm">{product.name}</Label>
