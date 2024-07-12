@@ -8,9 +8,9 @@ The application has the feature to update a pricing profile which is predefined 
 
 Based on the requirements provided, there form fields can be updated, the updated are seen in real time and once the user have decided on the changes, they can go ahead and save the changes and continue working.
 
-The live demo for the application is hosted in Vercel at : [Demo](https://pricing-p2firznhn-bitbinarys-projects.vercel.app/)
+The live demo for the application is hosted in Vercel at : [Demo](https://pricing-ui-tau-five.vercel.app/)
 
-The Swagger Api documentation is available at : [Demo Documentation](https://pricing-p2firznhn-bitbinarys-projects.vercel.app/api-doc)
+The Swagger Api documentation is available at : [Demo Documentation](https://pricing-ui-tau-five.vercel.app/api-doc)
 
 ## Getting Started Locally
 
