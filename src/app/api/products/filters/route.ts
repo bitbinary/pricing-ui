@@ -17,15 +17,17 @@ export async function GET() {
     brand: [],
   };
 
-  const { rows: Products } = (await sql`SELECT * FROM public."Products"`) as {
-    rows: IProduct[];
-  };
+  const { rows: Products } = await sql`SELECT * FROM public."Products"`;
 
-  Products.forEach((product: IProduct) => {
-    filters.segments.push(product.segmentId);
-    filters.category.push(product.categoryId);
+  console.log(Products);
+
+  Products.forEach((product) => {
+    filters.segments.push(product.segmentid);
+    filters.category.push(product.categoryid);
     filters.brand.push(product.brand);
   });
+
+  console.log(filters);
 
   filters.segments = Array.from(new Set(filters.segments));
   filters.category = Array.from(new Set(filters.category));

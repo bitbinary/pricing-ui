@@ -1,5 +1,4 @@
 import { useProductPricing } from "@/contexts/ProductPricing";
-
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { SelectBox } from "../common/SelectBox";
@@ -42,10 +41,7 @@ export const ProductsSearchBar = () => {
     };
   }, [segmentOptions, categoryOptions, BrandOptions]);
 
-  if (
-    !productsSelectionType ||
-    productsSelectionType === ProductsSelectionTypes.ALL
-  ) {
+  if (productsSelectionType === ProductsSelectionTypes.ALL) {
     return null;
   }
 
