@@ -18,7 +18,6 @@ export const PriceAdjustments = () => {
       [id]: value,
     });
   };
-  console.log(priceAdjustments.incrementMode);
 
   return (
     <div className="space-y-4">
