@@ -1,6 +1,51 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db";
 
+/**
+ * @swagger
+ * /api/create/pricing-profiles:
+ *   post:
+ *     description: Create a pricing profile
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               id:
+ *                 type: string
+ *               products:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               adjustmentMode:
+ *                 type: string
+ *               adjustmentIncrementMode:
+ *                 type: string
+ *               adjustmentBasedOn:
+ *                 type: string
+ *               selectionType:
+ *                 type: string
+ *               adjustmentValue:
+ *                 type: number
+ *             example:
+ *               name: "Sample Profile"
+ *               id: "12345"
+ *               products: ["Product A", "Product B"]
+ *               adjustmentMode: "Incremental"
+ *               adjustmentIncrementMode: "Percentage"
+ *               adjustmentBasedOn: "Cost"
+ *               selectionType: "All"
+ *               adjustmentValue: 10
+ *     responses:
+ *       201:
+ *         description: Profile created successfully
+ *       500:
+ *         description: Internal server error
+ */
 export async function POST(req: NextRequest) {
   const {
     name,

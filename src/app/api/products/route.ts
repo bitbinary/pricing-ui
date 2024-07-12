@@ -7,10 +7,36 @@ import { IProduct } from "@/types/Product";
  * @swagger
  * /api/products:
  *   get:
- *     description: Returns the hello world
+ *     description: Return the products based on the search criteria
+ *     parameters:
+ *       - in: query
+ *         name: searchString
+ *         schema:
+ *           type: string
+ *         description: The search string to filter products by title
+ *       - in: query
+ *         name: productOrsku
+ *         schema:
+ *           type: string
+ *         description: The search string to filter products by SKU
+ *       - in: query
+ *         name: segment
+ *         schema:
+ *           type: string
+ *         description: The segment ID to filter products by segment
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *         description: The category ID to filter products by category
+ *       - in: query
+ *         name: brand
+ *         schema:
+ *           type: string
+ *         description: The brand name to filter products by brand
  *     responses:
  *       200:
- *         description: hello world
+ *         description: return array of products
  */
 export async function GET(req: Request, res: Response) {
   const params = new URLSearchParams(req.url.split("?")[1]);

@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db";
 
+/**
+ * @swagger
+ * /api/pricing-profiles:
+ *   get:
+ *     description: Return the pricing-profiles
+ *     responses:
+ *       200:
+ *         description: return array of pricing profiles
+ */
 export async function GET(req: NextRequest) {
   const query = "SELECT * FROM PricingProfiles";
 

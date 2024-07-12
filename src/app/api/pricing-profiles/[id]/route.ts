@@ -1,6 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db";
 
+/**
+ * @swagger
+ * /api/[id]/pricing-profiles:
+ *   get:
+ *     description: Return matching pricing profile with [id]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID of the pricing profile
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Return pricing profile data
+ *       404:
+ *         description: Profile not found
+ *       500:
+ *         description: Internal server error
+ */
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -23,6 +43,51 @@ export async function GET(
   }
 }
 
+/**
+ * @swagger
+ * /api/[id]/pricing-profiles:
+ *   put:
+ *     description: Update the pricing profile with [id]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID of the pricing profile
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: body
+ *         in: body
+ *         description: Updated pricing profile data
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             name:
+ *               type: string
+ *             products:
+ *               type: array
+ *               items:
+ *                 type: string
+ *             adjustmentmode:
+ *               type: string
+ *             adjustmentincrementmode:
+ *               type: string
+ *             adjustmentbasedon:
+ *               type: string
+ *             selectiontype:
+ *               type: string
+ *             adjustmentvalue:
+ *               type: number
+ *     responses:
+ *       200:
+ *         description: Success message
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: Profile not found
+ *       500:
+ *         description: Internal server error
+ */
 export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -105,6 +170,26 @@ export async function PUT(
   }
 }
 
+/**
+ * @swagger
+ * /api/[id]/pricing-profiles:
+ *   delete:
+ *     description: Delete the pricing profile with [id]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: ID of the pricing profile
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success message
+ *       404:
+ *         description: Profile not found
+ *       500:
+ *         description: Internal server error
+ */
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
